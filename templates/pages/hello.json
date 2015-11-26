@@ -1,5 +1,5 @@
 {
-  "template": "/templates/p-collaborations.hbs",
+  "template": "/templates/p-hello.hbs",
   "data": {
     "title": "This is a test from someone",
     "content": "Oh my god this is so cool"

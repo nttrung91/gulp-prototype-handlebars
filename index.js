@@ -12,7 +12,7 @@ var comparisionHelper = require('./templates/helpers/helpers-comparisons');
 
 
 module.exports = function (opts) {
- 
+
   // Register Global Helpers
   comparisionHelper.register(handlebars.Handlebars);
 
@@ -20,14 +20,11 @@ module.exports = function (opts) {
   var options = opts || {};
 
   options = _.assign({
-    ignorePartials: true, //ignores the unknown footer2 partial in the handlebars template, defaults to false 
+    ignorePartials: true, //ignores the unknown footer2 partial in the handlebars template, defaults to false
     batch : ['./templates/partials'],
     helpers : {}
   }, options);
 
-  console.log(options);
-
-  
   return through.obj(function (file, enc, cb) {
 
     if (file.isNull()) {
@@ -40,15 +37,15 @@ module.exports = function (opts) {
       return;
     }
 
-    var template = JSON.parse(file.contents); 
-    var stream  = fs.src(__dirname + template.path);
+    var raw = JSON.parse(file.contents);
+    var rawStream  = fs.src(__dirname + raw.template);
 
-    stream
-      .pipe(handlebars(template.data, options))
+    rawStream
+      .pipe(handlebars(raw.data, options))
       .on("finish", function handleEndEvent () {
         file.contents = new Buffer(this._readableState.buffer[0].contents)
         file.path = gutil.replaceExtension(file.path, '.html');
-        cb(null, file); 
+        cb(null, file);
       });
   });
 };
