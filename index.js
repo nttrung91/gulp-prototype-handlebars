@@ -36,7 +36,7 @@ module.exports = function (options) {
 
 
   // Register Base Helpers
-  require('./helpers/helpers-comparisons').register(handlebars.Handlebars, 'helpers-comparisons');
+  require(__dirname + '/helpers/helpers-comparisons').register(handlebars.Handlebars, 'helpers-comparisons');
 
 
   return through.obj(function (file, enc, cb) {
