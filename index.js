@@ -3,27 +3,27 @@
 var through = require('through2');
 var _ = require('lodash');
 var fs = require('vinyl-fs');
+var fs2 = require('fs');
 var gutil = require('gulp-util');
 var handlebars = require('gulp-compile-handlebars');
-
-// Helpers
-var comparisionHelper = require('./templates/helpers/helpers-comparisons');
+var handlebarsHelpers = require('handlebars-helpers');
 
 
-
-module.exports = function (opts) {
-
-  // Register Global Helpers
-  comparisionHelper.register(handlebars.Handlebars);
+module.exports = function (options) {
 
   // Default Config
-  var options = opts || {};
+  options = options || {};
 
   options = _.assign({
     ignorePartials: true, //ignores the unknown footer2 partial in the handlebars template, defaults to false
-    batch : ['./templates/partials'],
-    helpers : {}
+    batch : ['./partials'],
+    helpers: {}
   }, options);
+
+
+  // Register Base Helpers
+  handlebarsHelpers.register(handlebars.Handlebars, 'helpers-comparisons');
+
 
   return through.obj(function (file, enc, cb) {
 

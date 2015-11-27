@@ -4,7 +4,7 @@
   "description": "Prototype pages with handlebars quickly and effortlessly",
   "license": "MIT",
   "repository": "nttrung91/gulp-prototype-handlebars",
-  "author": { 
+  "author": {
     "name": "Trung Nguyen",
     "email": "hello@ntrung.com",
     "url": "ntrung.com"
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "gulp-compile-handlebars": "^0.5.0",
+    "handlebars-helpers": "^0.5.8",
     "lodash": "^3.10.1",
     "vinyl-fs": "^2.2.1"
   }
