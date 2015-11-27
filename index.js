@@ -1,28 +1,42 @@
 'use strict';
 
 var through = require('through2');
-var _ = require('lodash');
-var fs = require('vinyl-fs');
-var fs2 = require('fs');
+var vfs = require('vinyl-fs');
+var fs = require('fs');
 var gutil = require('gulp-util');
 var handlebars = require('gulp-compile-handlebars');
-var handlebarsHelpers = require('handlebars-helpers');
 
 
 module.exports = function (options) {
 
-  // Default Config
+  /**
+   * __Default Config__
+   * @author: Trung Nguyen <http://github.com/nttrung91>
+   *
+   * @option  __array__   partials [description]
+   * @option  __string__  helpers  [description]
+   *
+   */
   options = options || {};
 
-  options = _.assign({
+  options = extend({
     ignorePartials: true, //ignores the unknown footer2 partial in the handlebars template, defaults to false
-    batch : ['./partials'],
+    batch : options.partials || [],
     helpers: {}
   }, options);
 
 
+  function extend (target, source) {
+    var a = Object.create(target);
+    Object.keys(source).map(function (prop) {
+      prop in a && (a[prop] = source[prop]);
+    });
+    return a;
+  };
+
+
   // Register Base Helpers
-  handlebarsHelpers.register(handlebars.Handlebars, 'helpers-comparisons');
+  require('./helpers/helpers-comparisons').register(handlebars.Handlebars, 'helpers-comparisons');
 
 
   return through.obj(function (file, enc, cb) {
@@ -38,7 +52,7 @@ module.exports = function (options) {
     }
 
     var raw = JSON.parse(file.contents);
-    var rawStream  = fs.src(__dirname + raw.template);
+    var rawStream  = vfs.src('./' + raw.template);
 
     rawStream
       .pipe(handlebars(raw.data, options))
