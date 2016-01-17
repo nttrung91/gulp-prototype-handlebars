@@ -22,7 +22,8 @@ module.exports = function (options) {
   options = extend({
     ignorePartials: true, //ignores the unknown footer2 partial in the handlebars template, defaults to false
     batch : options.partials || [],
-    helpers: {}
+    helpers: {},
+    extension: 'hbs'
   }, options);
 
 
@@ -35,8 +36,9 @@ module.exports = function (options) {
   };
 
 
+
   // Register Base Helpers
-  require(__dirname + '/helpers/helpers-comparisons').register(handlebars.Handlebars, 'helpers-comparisons');
+  require(__dirname + '/coreHelpers/helpers-comparisons').register(handlebars.Handlebars, 'helpers-comparisons');
 
 
   return through.obj(function (file, enc, cb) {
@@ -54,11 +56,15 @@ module.exports = function (options) {
     var raw = JSON.parse(file.contents);
     var rawStream  = vfs.src('./' + raw.template);
 
+    if (raw.extension) {
+      options.extension = raw.extension;
+    }
+
     rawStream
       .pipe(handlebars(raw.data, options))
       .on("finish", function handleEndEvent () {
         file.contents = new Buffer(this._readableState.buffer[0].contents)
-        file.path = gutil.replaceExtension(file.path, '.html');
+        file.path = gutil.replaceExtension(file.path, '.' + options.extension);
         cb(null, file);
       });
   });

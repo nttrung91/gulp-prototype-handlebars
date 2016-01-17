@@ -3,7 +3,9 @@ Inspired by [gulp-compile-handlebars](https://www.npmjs.com/package/gulp-compile
 
 
 ### Install
-`npm install --save-dev gulp-prototype-handlebars`
+```
+npm install --save-dev gulp-prototype-handlebars
+```
 
 
 ### gulpfile.js
@@ -27,18 +29,31 @@ gulp.task('handlebars', function () {
 ### src/p-home.json
 ```
 {
-    "template" : "src/p-home.hbs",
+    "template" : "src/p-home.hbs", //filepath to template
     "data" :  {
         //Billboard
-        billboardHeader: "Important Header",
-        billboardText: "Billboard Description",
+        "billboardHeader": "Important Header",
+        "billboardText": "Billboard Description",
 
         //Button
-        btnType: "button",
-        btnClass: "btn-default",
-        btnText: "Click Me"
+        "btnType": "button",
+        "btnClass": "btn-default",
+        "btnText": "Click Me"
     }
 }
+```
+
+
+### src/p-home.hbs
+```
+<div class="billboard">
+  <h3>{{billboardHeader}}</h3>
+  <p>{{billboardText}}</p>
+  {{> button
+    btnType = this.btnType
+    btnClass = this.btnClass
+    btnText = this.btnText }}
+</div>
 ```
 
 
@@ -58,17 +73,7 @@ gulp.task('handlebars', function () {
 ```
 
 
-### src/p-home.hbs
-```
-<div class="billboard">
-  <h3>{{billboardHeader}}</h3>
-  <p>{{billboardText}}</p>
-  {{> button btnType = this.btnType btnClass = this.btnClass btnText = this.btnText}}
-</div>
-```
-
-
-### dist/p.home.html
+### dist/p-home.html
 ```
 <div class="billboard">
   <h3>Important Header</h3>
