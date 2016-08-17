@@ -1,6 +1,6 @@
 {
   "name": "gulp-prototype-handlebars",
-  "version": "1.2.6",
+  "version": "1.2.5",
   "description": "Prototype pages with handlebars quickly and effortlessly",
   "license": "MIT",
   "repository": "nttrung91/gulp-prototype-handlebars",
