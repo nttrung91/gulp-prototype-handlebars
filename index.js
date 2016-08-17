@@ -9,6 +9,8 @@ var handlebars = require('gulp-compile-handlebars');
 
 module.exports = function (options) {
 
+    console.log('Options', options);
+
   /**
    * __Default Config__
    * @author: Trung Nguyen <http://github.com/nttrung91>
